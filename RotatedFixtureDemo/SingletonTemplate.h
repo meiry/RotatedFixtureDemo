@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : SingletonTemplate.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -23,8 +23,9 @@
  * 3. This notice may not be removed or altered from any source
  *    distribution.
  */
-#ifndef Box2DTestBed_SingletonTemplate_h
-#define Box2DTestBed_SingletonTemplate_h
+
+#ifndef _SingletonTemplate_h
+#define _SingletonTemplate_h
 
 /* This template implements is designed to be used as the 
  * base class for a singleton.  
@@ -79,4 +80,4 @@ protected:
    SingletonDynamic() { }
 };
 
-#endif
+#endif // _SingletonTemplate_h

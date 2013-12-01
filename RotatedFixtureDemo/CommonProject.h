@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : CommonProject.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -24,8 +24,8 @@
  *    distribution.
  */
 
-#ifndef Box2DTestBed_CommonProject_h
-#define Box2DTestBed_CommonProject_h
+#ifndef __CommonProject_h__
+#define __CommonProject_h__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -98,4 +98,4 @@ typedef struct LINE_PIXELS_DATA
 } LINE_PIXELS_DATA_T;
 
 
-#endif
+#endif // __CommonProject_h__

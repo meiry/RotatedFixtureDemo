@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : MainScene.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -24,8 +24,8 @@
  *    distribution.
  */
 
-#ifndef __Box2DTestBed__MainScene__
-#define __Box2DTestBed__MainScene__
+#ifndef __MainScene__
+#define __MainScene__
 
 #include "CommonProject.h"
 #include "CommonSTL.h"
@@ -74,4 +74,4 @@ public:
 };
 
 
-#endif /* defined(__Box2DTestBed__MainScene__) */
+#endif /* defined(__MainScene__) */

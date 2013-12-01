@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : MathUtilities.cpp
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.

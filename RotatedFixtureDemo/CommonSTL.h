@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : CommonSTL.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -24,8 +24,8 @@
  *    distribution.
  */
 
-#ifndef Box2DTestBed_CommonSTL_h
-#define Box2DTestBed_CommonSTL_h
+#ifndef _CommonSTL_h
+#define _CommonSTL_h
 
 #include <iostream>
 #include <string>
@@ -56,4 +56,4 @@ typedef double float64;
 #define Max(a,b) (a<b?b:a)
 
 
-#endif
+#endif // _CommonSTL_h

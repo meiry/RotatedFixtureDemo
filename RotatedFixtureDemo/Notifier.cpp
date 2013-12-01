@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : Notifier.cpp
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -25,7 +25,6 @@
  */
 
 #include "Notifier.h"
-
 
 void Notifier::Reset()
 {
@@ -73,7 +72,7 @@ void Notifier::Attach(Notified* observer, NOTIFIED_EVENT_TYPE_T eventType)
       {
          events.push_back(eventType);
          _notifiedVector[eventType].push_back(observer);
-      }      
+      }
    }
 }
 
@@ -156,7 +155,7 @@ void Notifier::Detach(Notified* observer)
       // These are all the event types this observer was registered for.
       NOTIFIED_EVENT_TYPE_VECTOR_T& eventTypes = _mapIter->second;
       for(int idx = 0; idx < eventTypes.size();idx++)
-      {  
+      {
          NOTIFIED_EVENT_TYPE_T eventType = eventTypes[idx];
          // Remove this observer from the Notified list for this event type.
          RemoveNotified(_notifiedVector[eventType], observer);
@@ -169,72 +168,15 @@ void Notifier::Detach(Notified* observer)
 }
 
 
-
-void Notifier::Notify(NOTIFIED_EVENT_TYPE_T eventType, const void* eventData)
-{
-   
-   if(eventType < NE_MIN || eventType >= NE_MAX)
-   {
-      throw std::out_of_range("eventType out of range");
-   }
-   
-   // Keep a copy of the list.  If it changes while iterating over it because of a
-   // deletion, we may miss an object to update.  Instead, we keep track of Detach(...)
-   // calls during the Notify(...) cycle and ignore anything detached because it may
-   // have been deleted.
-   NOTIFIED_VECTOR_T notified = _notifiedVector[eventType];
-
-   // If a call to Notify leads to a call to Notify, we need to keep track of
-   // the depth so that we can clear the detached list when we get to the end
-   // of the chain of Notify calls.
-   _notifyDepth++;
-
-   // Loop over all the observers for this event.
-   // NOTE that the the size of the notified vector may change if
-   // a call to Notify(...) adds/removes observers.  This should not be a
-   // problem because the list is a simple vector.
-   for(int idx = 0; idx < notified.size(); idx++)
-   {
-      Notified* observer = notified[idx];
-      if(_detached.size() > 0)
-      {  // Instead of doing the search for all cases, let's try to speed it up a little
-         // by only doing the search if more than one observer dropped off during the call.
-         // This may be overkill or unnecessary optimization.
-         switch(_detached.size())
-         {
-            case 0:
-               break;
-            case 1:
-               if(_detached[0] == observer)
-                  continue;
-               break;
-            default:
-               if(std::find(_detached.begin(), _detached.end(), observer) != _detached.end())
-                  continue;
-               break;
-         }
-      }
-      observer->Notify(eventType,eventData);
-   }
-   // Decrement this each time we exit.
-   _notifyDepth--;
-   if(_notifyDepth == 0 && _detached.size() > 0)
-   {  // We reached the end of the Notify call chain.  Remove the temporary list
-      // of anything that detached while we were Notifying.
-      _detached.clear();
-   }
-   assert(_notifyDepth >= 0);
-}
-
 Notified::~Notified()
 {
    Notifier::Instance().Detach(this);
 }
 
 // Return all events that this object is registered for.
-vector<Notifier::NOTIFIED_EVENT_TYPE_T> Notifier::GetEvents(Notified* observer)
+vector<NOTIFIED_EVENT_TYPE_T> Notifier::GetEvents(Notified* observer)
 {
-   vector<Notifier::NOTIFIED_EVENT_TYPE_T> result;
+   vector<NOTIFIED_EVENT_TYPE_T> result;
    
    _mapIter = _notifiedMap.find(observer);
    if(_mapIter != _notifiedMap.end())
@@ -242,7 +184,7 @@ vector<Notifier::NOTIFIED_EVENT_TYPE_T> Notifier::GetEvents(Notified* observer)
       // These are all the event types this observer was registered for.
       result = _mapIter->second;
    }
-
+   
    return result;
 }
 

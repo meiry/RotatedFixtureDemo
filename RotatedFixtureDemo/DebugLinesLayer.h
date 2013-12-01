@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : DebugLinesLayer.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -24,8 +24,8 @@
  *    distribution.
  */
 
-#ifndef __Box2DTestBed__DebugLinesLayer__
-#define __Box2DTestBed__DebugLinesLayer__
+#ifndef __DebugLinesLayer__
+#define __DebugLinesLayer__
 
 #include "CommonSTL.h"
 #include "CommonProject.h"
@@ -52,9 +52,9 @@ private:
       Reset();
       
       
-      Notifier::Instance().Attach(this, Notifier::NE_RESET_DRAW_CYCLE);
-      Notifier::Instance().Attach(this, Notifier::NE_DEBUG_LINE_DRAW_ADD_LINE_PIXELS);
-      Notifier::Instance().Attach(this, Notifier::NE_DEBUG_TOGGLE_VISIBILITY);
+      Notifier::Instance().Attach(this, NE_RESET_DRAW_CYCLE);
+      Notifier::Instance().Attach(this, NE_DEBUG_LINE_DRAW_ADD_LINE_PIXELS);
+      Notifier::Instance().Attach(this, NE_DEBUG_TOGGLE_VISIBILITY);
       
       return true;
    }
@@ -109,23 +109,39 @@ public:
       }
    }
    
-   virtual void Notify(Notifier::NOTIFIED_EVENT_TYPE_T eventType, const void* eventData)
+   virtual bool Notify(NOTIFIED_EVENT_TYPE_T eventType, const LINE_PIXELS_DATA_T& value)
    {
+      bool result = true;
       switch(eventType)
       {
-         case Notifier::NE_RESET_DRAW_CYCLE:
-            Reset();
-            break;
-         case Notifier::NE_DEBUG_LINE_DRAW_ADD_LINE_PIXELS:
-            AddLine(*((LINE_PIXELS_DATA_T*)eventData));
-            break;
-         case Notifier::NE_DEBUG_TOGGLE_VISIBILITY:
-            setVisible(!isVisible());
+         case NE_DEBUG_LINE_DRAW_ADD_LINE_PIXELS:
+            AddLine(value);
             break;
          default:
+            result = false;
             assert(false);
             break;
       }
+      return result;
+   }
+   
+   virtual bool Notify(NOTIFIED_EVENT_TYPE_T eventType, const bool& value)
+   {
+      bool result = true;
+      switch(eventType)
+      {
+         case NE_RESET_DRAW_CYCLE:
+            Reset();
+            break;
+         case NE_DEBUG_TOGGLE_VISIBILITY:
+            setVisible(!isVisible());
+            break;
+         default:
+            result = false;
+            assert(false);
+            break;
+      }
+      return result;
    }
    
    static DebugLinesLayer* create(bool createVisible = true)
@@ -145,4 +161,4 @@ public:
    }
 };
 
-#endif /* defined(__Box2DTestBed__DebugLinesLayer__) */
+#endif /* defined(__DebugLinesLayer__) */

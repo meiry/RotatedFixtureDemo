@@ -1,6 +1,6 @@
 /********************************************************************
  * File   : MathUtilities.h
- * Project: ToolsDemo
+ * Project: Multiple
  *
  ********************************************************************
  * Created on 9/21/13 By Nonlinear Ideas Inc.
@@ -25,8 +25,8 @@
  */
 
 
-#ifndef __Box2DTestBed__MathUtilities__
-#define __Box2DTestBed__MathUtilities__
+#ifndef __MathUtilities__
+#define __MathUtilities__
 
 #include "CommonSTL.h"
 #include "CommonProject.h"
@@ -172,4 +172,4 @@ public:
 
 };
 
-#endif /* defined(__Box2DTestBed__MathUtilities__) */
+#endif /* defined(__MathUtilities__) */
