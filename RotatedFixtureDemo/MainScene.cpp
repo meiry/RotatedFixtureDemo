@@ -49,7 +49,9 @@ void MainScene::CreatePhysics()
    
    // Initialize the Viewport
    Viewport::Instance().Init(worldSizeMeters);
-   Vec2 gravity(0.0,0.0);   
+   Viewport::Instance().SetScale(1.0);
+   
+   Vec2 gravity(0.0,0.0);
    _world = new b2World(gravity);
    // Do we want to let bodies sleep?
    // No for now...makes the debug layer blink
@@ -202,7 +204,6 @@ void MainScene::onExit()
 void MainScene::onEnterTransitionDidFinish()
 {
    CCScene::onEnterTransitionDidFinish();
-   Viewport::Instance().SetScale(1.0);
    // Schedule Updates
    scheduleUpdate();
 }
@@ -227,15 +228,33 @@ void MainScene::UpdateSprites()
    }
 }
 
+static void AdjustNodeScale(CCNode* node, float32 entitySizeMeters, float32 ptmRatio)
+{
+   CCSize nodeSize = node->getContentSize();
+   float32 maxSizePixels = max(nodeSize.width,nodeSize.height);
+   assert(maxSizePixels >= 1.0);
+   float32 scale = (entitySizeMeters*ptmRatio/maxSizePixels);
+   
+   node->setScale(scale);
+   /*
+    CCLOG("Adjusting Node Scale: em:%f, msp:%f, ptm:%f, scale:%f",
+    entitySizeMeters,
+    maxSizePixels,
+    ptmRatio,
+    scale
+    );
+    */
+}
+
 void MainScene::CreateSprites()
 {
    Viewport& vp = Viewport::Instance();
+   float32 ptmRatio = vp.GetPTMRatio();
    
    for(int idx = 0; idx < _fixturePositions.size(); idx++)
    {
       CCSprite* sprite = CCSprite::create("arrow.png");
-      CCLOG("Viewport PTM Ratio = %f",vp.GetPTMRatio());
-      sprite->setScale(1.0*vp.GetPTMRatio()/128);
+      AdjustNodeScale(sprite, 1.0, ptmRatio);
       _fixtureSprites.push_back(sprite);
       addChild(sprite);
    }

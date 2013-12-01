@@ -50,7 +50,7 @@ void Viewport::CalculateViewport()
    _vOffsetPixels.y = -_vScalePixelToMeter.y * (_vCenterMeters.y - _vScale*_worldSizeMeters.height/2/_aspectRatio);
    
    _ptmRatio = _screenSizePixels.width/_vSizeMeters.width;
-   
+   //   CCLOG("PTMRatio = %f, Scale = %f",_ptmRatio,_vScale);
    Notifier::Instance().Notify(Notifier::NE_VIEWPORT_CHANGED);
    
 }

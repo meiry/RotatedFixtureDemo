@@ -112,9 +112,9 @@ public:
    inline float32 GetViewportScaleMin() { return _vScaleMin; }
    inline float32 GetViewportScaleMax() { return _vScaleMax; }
    
-   // Change the scale of the viewport.  Note that the scale change will
-   // not work if the scale is set outsize the min/max (see getters).
+   // Change the scale of the viewport.
    void SetScale(float32 scale);
+   // Change the center of the viewport.
    void SetCenter(const Vec2& position);
    
    // Check if a position is within the range of the view.

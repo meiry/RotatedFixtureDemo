@@ -56,9 +56,4 @@ typedef double float64;
 #define Max(a,b) (a<b?b:a)
 
 
-#define DebugLogCPP(s,...) GameUtilities::LogMessage(__FILE__,__LINE__,s,##__VA_ARGS__);
-
-#define DebugLog( s, ... ) NSLog( @"<%@:(%d)> %@", [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
-
-
 #endif
