@@ -168,6 +168,26 @@ void MainScene::CreateBody()
    _body->CreateFixture(&fixtureDef);
    _fixturePositions.push_back(CalculateAverage(vertices));
    
+   // Add a second body, welded to the first.
+   bodyDef.position = Vec2(0,2.5);
+   b2Body* otherBody = _world->CreateBody(&bodyDef);
+   vertices.clear();
+   vertices.push_back(Vec2(1*VERT_SCALE,1*VERT_SCALE));
+   vertices.push_back(Vec2(-1*VERT_SCALE,1*VERT_SCALE));
+   vertices.push_back(Vec2(-1*VERT_SCALE,-1*VERT_SCALE));
+   vertices.push_back(Vec2(1*VERT_SCALE,-1*VERT_SCALE));
+   polyShape.Set(&vertices[0],vertices.size());
+   otherBody->CreateFixture(&fixtureDef);
+   
+   // Weld them together.
+   b2WeldJointDef jointDef;
+   jointDef.Initialize(_body, otherBody, _body->GetWorldCenter());
+   //   jointDef.dampingRatio = 0.5;
+   //   jointDef.frequencyHz = 2.0;
+   jointDef.collideConnected = true;
+   _world->CreateJoint(&jointDef);
+   
+   
    _body->SetAngularVelocity(M_PI/8);
 }
 
@@ -254,6 +274,9 @@ void MainScene::CreateSprites()
    for(int idx = 0; idx < _fixturePositions.size(); idx++)
    {
       CCSprite* sprite = CCSprite::create("arrow.png");
+      // The default sprite anchor is (0.5,0.5).  This
+      // is being done to drive home the point.
+      sprite->setAnchorPoint(ccp(0.5,0.5));
       AdjustNodeScale(sprite, 1.0, ptmRatio);
       _fixtureSprites.push_back(sprite);
       addChild(sprite);
