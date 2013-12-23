@@ -59,6 +59,7 @@ private:
    void UpdatePhysics();
    void CreateSprites();
    void UpdateSprites();
+   void InitSystem();
    
 public:
    

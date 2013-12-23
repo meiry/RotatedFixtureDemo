@@ -60,8 +60,16 @@ void MainScene::CreatePhysics()
    _world->SetContinuousPhysics(true);
 }
 
+void MainScene::InitSystem()
+{
+   Notifier::Instance().Init();
+      
+}
+
 bool MainScene::init()
 {
+   // Init System
+   InitSystem();
    
    // Create physical world
    CreatePhysics();
